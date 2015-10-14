@@ -3,30 +3,31 @@ weather_statement = (place) ->
 
   weather = "GET IT FROM FORECAST.IO?!"
 
-  generic_things = [
+  generic_weathers = [
+    "BE LOTS OF WEATHER HAPPENING",
     "BE AWESOME",
     "BE WEIRD"
   ]
 
-  sunny_things = [
+  sunny_weathers = [
     'BE SUNNY ALL DAY',
     'BE UNSEASONABLY WARM',
     'BE VERY NICE OUT TODAY'
   ]
 
-  cloudy_things = [
+  cloudy_weathers = [
     'BE EXTREMELY CLOUDY',
     'BE CLOUDY AND GRAY',
     'BE DEPRESSINGLY CLOUDY'
     ]
 
-  rainy_things = [
+  rainy_weathers = [
     'RAIN ALL DAY',
     'BE VERY RAINY',
     'RAIN LIKE THE DICKENS'
   ]
 
-  winter_things = [
+  winter_weathers = [
     'SNOW',
     'SNOW ALL DAY',
     'BE VERY SNOWY',
@@ -35,15 +36,15 @@ weather_statement = (place) ->
     'BE UNSEASONABLY COLD'
   ]
 
-  things = switch
-    when weather == 'sunny' then sunny_things.concat(generic_things)
-    when weather == 'cloudy' then cloudy_things.concat(generic_things)
-    when weather == 'rainy' then rainy_things.concat(generic_things)
-    when weather == 'winter' then winter_things.concat(generic_things)
-    else generic_things
+  weathers = switch
+    when weather == 'sunny' then sunny_weathers.concat(generic_weathers)
+    when weather == 'cloudy' then cloudy_weathers.concat(generic_weathers)
+    when weather == 'rainy' then rainy_weathers.concat(generic_weathers)
+    when weather == 'winter' then winter_weathers.concat(generic_weathers)
+    else generic_weathers
 
-  thing1 = things[Math.floor(Math.random() * things.length)]
-  thing2 = things[Math.floor(Math.random() * things.length)]
+  weather1 = weathers[Math.floor(Math.random() * weathers.length)]
+  weather2 = weathers[Math.floor(Math.random() * weathers.length)]
 
   generic_objects = [
     "AXE",
@@ -178,7 +179,7 @@ weather_statement = (place) ->
 
   message = "THIS IS FRANKIE MACDONALD REPORTING LIVE FROM SYDNEY NOVA SCOTIA! "
   message += "#{weather} IS HEADED FOR #{place}! "
-  message += "IT'S GONNA #{thing1}!! IT'S GONNA #{thing2}!! "
+  message += "IT'S GONNA #{weather1}!! IT'S GONNA #{weather2}!! "
   message += "HAVE YOUR #{object1} READY!! HAVE YOUR #{object2} READY!! "
   message += "ORDER YOUR #{food1} and #{food2} WHILE YOU STILL CAN!!"
 
