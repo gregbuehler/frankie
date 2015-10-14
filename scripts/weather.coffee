@@ -4,8 +4,8 @@ weather_statement = (place) ->
   weather = "GET IT FROM FORECAST.IO?!"
 
   generic_things = [
-    "FOO",
-    "BAR"
+    "BE AWESOME",
+    "BE WEIRD"
   ]
 
   sunny_things = [
@@ -36,10 +36,10 @@ weather_statement = (place) ->
   ]
 
   things = switch
-    when weather == 'sunny' then sunny_things
-    when weather == 'cloudy' then cloudy_things
-    when weather == 'rainy' then rainy_things
-    when weather == 'winter' then winter_things
+    when weather == 'sunny' then sunny_things.concat(generic_things)
+    when weather == 'cloudy' then cloudy_things.concat(generic_things)
+    when weather == 'rainy' then rainy_things.concat(generic_things)
+    when weather == 'winter' then winter_things.concat(generic_things)
     else generic_things
 
   thing1 = things[Math.floor(Math.random() * things.length)]
@@ -143,10 +143,10 @@ weather_statement = (place) ->
   ]
 
   objects = switch
-    when weather == 'sunny' then sunny_objects
-    when weather == 'cloudy' then cloudy_objects
-    when weather == 'rainy' then rainy_objects
-    when weather == 'winter' then winter_objects
+    when weather == 'sunny' then sunny_objects.concat(generic_objects)
+    when weather == 'cloudy' then cloudy_objects.concat(generic_objects)
+    when weather == 'rainy' then rainy_objects.concat(generic_objects)
+    when weather == 'winter' then winter_objects.concat(generic_objects)
     else generic_objects
 
   object1 = objects[Math.floor(Math.random() * objects.length)]
