@@ -5,6 +5,8 @@
   "author": "Greg Buehler <gregory.r.buehler@gmail.com>",
   "description": "A BOISTEROUS BOT",
   "dependencies": {
+    "forecast.io-bluebird": "0.0.1",
+    "googlemaps": "^1.0.2",
     "hubot": "^2.16.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.2.2",
