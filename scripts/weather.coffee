@@ -1,7 +1,5 @@
 
-weather_statement = (place) ->
-
-  weather = "GET IT FROM FORECAST.IO?!"
+weather_statement = (place, weather) ->
 
   generic_weathers = [
     "BE LOTS OF WEATHER HAPPENING",
@@ -183,9 +181,91 @@ weather_statement = (place) ->
   message += "HAVE YOUR #{object1} READY!! HAVE YOUR #{object2} READY!! "
   message += "ORDER YOUR #{food1} and #{food2} WHILE YOU STILL CAN!!"
 
+init_google_api = (key) ->
+  Maps = require 'googlemaps'
+
+  publicConfig =
+    key: key
+    stagger_time:       1000
+    encode_polylines:   false
+    secure:             true
+  
+
+  gmApi = new Maps publicConfig
+
+init_forecast_api = (key) ->
+  Forecast = require 'forecast.io-bluebird'
+  
+  forecastConfig =
+    key: key
+  
+  forcast = new Forecast forecastConfig
+
+lat_lon_for_location = (api, location, weatherFn) ->
+  geocodeParams =
+    address: location
+
+  api.geocode(
+    geocodeParams
+    (err, data) ->
+      #Total hack because the callback isn't being handled properly and the data is filled in after its executed or something
+      setTimeout(
+        () ->
+          if typeof data is 'object'
+            location = data.results[0].geometry.location
+            weatherFn(
+              location.lat
+              location.lng)
+        100)
+
+    )
+
+map_weather_type = (weather) ->
+  map = 
+    'clear-day': 'sunny'
+    'clear-night': 'sunny'
+    'rain': 'rainy'
+    'snow': 'winter'
+    'sleet': 'winter'
+    'wind': 'cloudy'
+    'fog': 'cloudy'
+    'cloudy': 'cloudy'
+    'partly-cloudy-day': 'cloudy'
+    'partly-cloudy-night': 'cloudy'
+
+
+  condition = weather.currently.icon
+
+  map[condition]
+
+
 module.exports = (robot) ->
+  config = require '../frankie-config.js'
+  mapsApiKey = config.google.apiKey
+  forecastApiKey = config.forecastIO.apiKey
+
+  gmApi = init_google_api mapsApiKey
+
+  forecastApi = init_forecast_api forecastApiKey
+
   robot.respond /weather (.*)$/i, (msg) ->
-    msg.send weather_statement msg.match[1]
+    weatherFn = (lat, lon) ->
+      console.log lat
+      console.log lon
+      promise = forecastApi.fetch(
+        lat
+        lon)
+
+      promise.then (result) ->
+        weather_type = map_weather_type result
+        msg.send weather_statement(
+          msg.match[1]
+          weather_type)
+    
+    lat_lon_for_location(
+      gmApi
+      msg.match[1]
+      weatherFn)
 
   robot.respond /weather$/i, (msg) ->
     msg.send weather_statement "PORTLAND, OR"
